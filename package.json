@@ -23,6 +23,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "file-loader": "^6.1.0",
     "html-webpack-plugin": "^4.5.0",
+    "immer": "^7.0.9",
     "mini-css-extract-plugin": "^0.8.0",
     "postcss": "^8.1.1",
     "postcss-loader": "^4.0.3",
@@ -30,12 +31,16 @@
     "pug-loader": "^2.4.0",
     "sass": "^1.26.11",
     "sass-loader": "^10.0.2",
+    "ts-loader": "^8.0.4",
+    "typescript": "^4.0.3",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
     "autoprefixer": "^10.0.1",
+    "glslify-loader": "^2.0.0",
+    "raw-loader": "^4.0.1",
     "three": "^0.121.1"
   }
 }
