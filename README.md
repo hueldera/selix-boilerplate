@@ -1,7 +1,9 @@
-#Selix: ThreeJS Boilerplate
+# Selix: ThreeJS Boilerplate
+
 > A simple agnostic Webpack + ThreeJS + Pug+ Sass boilerplate
 
-##How to run
+## How to run
+
 ```sh
 # start development server
 $ yarn serve
@@ -12,4 +14,3 @@ $ yarn build:dev
 # build
 $ yarn build
 ```
-
