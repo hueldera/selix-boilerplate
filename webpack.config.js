@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -74,6 +75,17 @@ module.exports = {
     new MiniCssExtractPlugin(),
     new CopyPlugin({
       patterns: [{ from: './assets', to: './assets' }]
+    }),
+    new webpack.BannerPlugin({
+      banner: () => {
+        return `
+---------------------------------------
+Fluxel - Immersive Content Creators
+---------------------------------------
+${new Date().toDateString()}
+---------------------------------------
+`
+      }
     })
   ]
 }

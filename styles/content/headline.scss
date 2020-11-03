@@ -1,0 +1,46 @@
+#headline {
+  height: calc(100% - 78px -30px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  margin-left: 25px;
+
+  h2 {
+    span {
+      display: block;
+    }
+  }
+  
+  .buttons {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 255px;
+    a {
+      opacity: 0.8;
+      pointer-events: all;
+      cursor: pointer;
+      color: #ffffff;
+      text-decoration: none;
+      border: 1px solid #ffffff;
+      padding: 15px;
+    }
+
+    a.filled:hover {
+      background-color: #ffffff;
+    }
+
+    a:hover {
+      background-color: #0000001a;
+    }
+
+    .filled {
+      background-color: #f0f0f0;
+      color: #000000;
+    }
+
+  }
+}

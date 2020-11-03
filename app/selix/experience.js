@@ -6,11 +6,12 @@ class Experience {
     this.state = new ExperienceState()
     this.animate = this.animate.bind(this)
     this.init = this.init.bind(this)
+    this.pointerMove = this.pointerMove.bind(this)
+    this.render = this.render.bind(this)
     this.onUpdatePub = {}
     this.onInitPub = {}
-
-    this.render = ({ renderer, sceneRef, camera }) =>
-      renderer.render(sceneRef, camera)
+    this.onRenderPub = {}
+    this.onPointerMovePub = {}
 
     this.subscribeToInit('__renderer', ctx => {
       document
@@ -23,6 +24,7 @@ class Experience {
         ctx.state.scenes.default.cameras.default
       )
     })
+    document.body.addEventListener('pointermove', this.pointerMove, false)
   }
 
   start () {
@@ -36,6 +38,14 @@ class Experience {
 
   unsubscribeFromInit (id) {
     delete this.onInitPub[id]
+  }
+
+  subscribeToRender (id, f) {
+    this.onRenderPub[id] = f
+  }
+
+  unsubscribeFromRender (id) {
+    delete this.onRenderPub[id]
   }
 
   getDefaultCamera () {
@@ -66,6 +76,14 @@ class Experience {
     delete this.onUpdatePub[id]
   }
 
+  subscribeToPointerMove (id, f) {
+    this.onPointerMovePub[id] = f
+  }
+
+  unsubscribeFromPointerMove (id) {
+    delete this.onPointerMovePub[id]
+  }
+
   getDefaults () {
     return {
       camera: this.getDefaultCamera(),
@@ -81,6 +99,20 @@ class Experience {
     })
   }
 
+  pointerMove (event) {
+    Object.values(this.onPointerMovePub).map(f => {
+      f(event, this)
+    })
+  }
+
+  render ({ renderer, sceneRef, camera }) {
+    Object.values(this.onRenderPub).map(f => {
+      f(this)
+    })
+
+    renderer.render(sceneRef, camera)
+  }
+
   animate () {
     requestAnimationFrame(this.animate)
 
@@ -89,6 +121,24 @@ class Experience {
     })
 
     this.render(this.getDefaults())
+  }
+
+  store (key, value) {
+    if (arguments.length === 0) {
+      return { ...this.custom }
+    } else if (typeof key === 'string') {
+      if (typeof value !== 'undefined') {
+        return this.state.addCustomMember(key, value)
+      } else {
+        return this.state.retrieveMembers([key])
+      }
+    } else if (typeof key === 'object' && !Array.isArray(key)) {
+      return this.state.addCustomMembers(key)
+    } else if (typeof key === 'object' && Array.isArray(key)) {
+      return this.state.retrieveMembers(key)
+    } else {
+      return { sxNotFound: 'Not Found' }
+    }
   }
 }
 

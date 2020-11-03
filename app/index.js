@@ -1,9 +1,9 @@
 import * as THREE from 'three/build/three.module'
 import Experience from './selix/experience'
 import main from './src/main'
-export const project = new Experience()
+export const exp = new Experience()
 
-project.subscribeToInit('windowResize', ctx => {
+exp.subscribeToInit('windowResize', ctx => {
   const { camera, renderer } = ctx.getDefaults()
   renderer.setPixelRatio(window.devicePixelRatio)
 
@@ -16,4 +16,4 @@ project.subscribeToInit('windowResize', ctx => {
 })
 
 main()
-project.start()
+exp.start()

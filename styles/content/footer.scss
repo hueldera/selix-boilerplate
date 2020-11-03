@@ -1,0 +1,15 @@
+footer {
+  text-align: center;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+
+  .copy {
+    // background-color: #ffffff;
+    color: #000000;
+    max-width: 200px;
+    font-size: 13px;
+    text-transform: lowercase;
+    padding: 5px;
+  }
+}
