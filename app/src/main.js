@@ -2,6 +2,8 @@ import * as THREE from 'three/build/three.module'
 import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls'
 import { generateHeight, generateTexture } from './demo/functions'
 import { gsap } from 'gsap'
+import setupLoading from './loading'
+
 export default class Main {
   constructor (experience) {
     this.exp = experience
@@ -9,6 +11,7 @@ export default class Main {
 
   setup () {
     const { sceneRef, renderer, camera } = this.exp.getDefaults()
+    setupLoading()
     this.scene = sceneRef
     this.renderer = renderer
     this.camera = camera

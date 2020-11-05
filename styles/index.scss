@@ -20,6 +20,24 @@ body, #stage {
   pointer-events: none;
 }
 
+#loading {
+  color: #ffffff;
+  background-color: #000000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 1000;
+
+  .progressBar {
+    background-color: #ffffff;
+    width:1%;
+    height: 10px;
+  }
+}
 
 #stage {
   canvas {
@@ -27,10 +45,8 @@ body, #stage {
     display: block;
   }
 
- 
   #root {
     overflow: hidden;
-    height: 100%;
     color: #ffffff;
   }
 
