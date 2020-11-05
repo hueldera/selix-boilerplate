@@ -27,21 +27,32 @@ class Experience {
     document.body.addEventListener('pointermove', this.pointerMove, false)
   }
 
+  registerClass (classRef) {
+    const classObj = new classRef(this)
+
+    classObj.setup()
+    this.subscribeToInit('main', classObj.init, classObj)
+    this.subscribeToUpdate('main', classObj.update, classObj)
+    this.subscribeToPointerMove('main', classObj.pointerMove, classObj)
+    this.subscribeToRender('main', classObj.render, classObj)
+    window.addEventListener('resize', () => classObj.windowResize(), false)
+  }
+
   start () {
     this.init()
     this.animate()
   }
 
-  subscribeToInit (id, f) {
-    this.onInitPub[id] = f
+  subscribeToInit (id, f, ctx) {
+    this.onInitPub[id] = f.bind(ctx)
   }
 
   unsubscribeFromInit (id) {
     delete this.onInitPub[id]
   }
 
-  subscribeToRender (id, f) {
-    this.onRenderPub[id] = f
+  subscribeToRender (id, f, ctx) {
+    this.onRenderPub[id] = f.bind(ctx)
   }
 
   unsubscribeFromRender (id) {
@@ -68,16 +79,16 @@ class Experience {
     return this.state.renderers.default
   }
 
-  subscribeToUpdate (id, f) {
-    this.onUpdatePub[id] = f
+  subscribeToUpdate (id, f, ctx) {
+    this.onUpdatePub[id] = f.bind(ctx)
   }
 
   unsubscribeFromUpdate (id) {
     delete this.onUpdatePub[id]
   }
 
-  subscribeToPointerMove (id, f) {
-    this.onPointerMovePub[id] = f
+  subscribeToPointerMove (id, f, ctx) {
+    this.onPointerMovePub[id] = f.bind(ctx)
   }
 
   unsubscribeFromPointerMove (id) {

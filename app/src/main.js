@@ -1,29 +1,36 @@
 import * as THREE from 'three/build/three.module'
 import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls'
-import { exp } from '../index'
 import { generateHeight, generateTexture } from './demo/functions'
 // import setupStore from './store'
 
-function main () {
-  const worldWidth = 256,
-    worldDepth = 256,
-    clock = new THREE.Clock()
-  let controls
+export default class Main {
+  constructor (experience) {
+    this.exp = experience
+  }
 
-  // run on start
-  exp.subscribeToInit('main', ctx => {
-    const { sceneRef, renderer, camera } = ctx.getDefaults()
-    controls = new FirstPersonControls(camera, renderer.domElement)
+  setup () {
+    const { sceneRef, renderer, camera } = this.exp.getDefaults()
+    this.scene = sceneRef
+    this.renderer = renderer
+    this.camera = camera
 
-    sceneRef.background = new THREE.Color(0xefd1b5)
-    sceneRef.fog = new THREE.FogExp2(0xefd1b5, 0.0025)
+    // Your code here
+    this.clock = new THREE.Clock()
+    this.controls = new FirstPersonControls(camera, this.renderer.domElement)
+  }
+
+  init () {
+    this.controls.handleResize()
+    const worldDepth = 256,
+      worldWidth = 256
+
+    this.scene.background = new THREE.Color(0xefd1b5)
+    this.scene.fog = new THREE.FogExp2(0xefd1b5, 0.0025)
 
     const data = generateHeight(worldWidth, worldDepth)
 
-    camera.position.set(100, 800, -800)
-    camera.lookAt(-100, 810, -800)
-
-    // controls.update()
+    this.camera.position.set(100, 800, -800)
+    this.camera.lookAt(-100, 810, -800)
 
     const geometry = new THREE.PlaneBufferGeometry(
       7500,
@@ -50,33 +57,24 @@ function main () {
       geometry,
       new THREE.MeshBasicMaterial({ map: texture })
     )
-    sceneRef.add(mesh)
+    this.scene.add(mesh)
 
-    controls.movementSpeed = 150
-    controls.lookSpeed = 0.1
-  })
+    this.controls.movementSpeed = 150
+    this.controls.lookSpeed = 0.1
+  }
 
-  // update every frame
-  exp.subscribeToUpdate('main', ctx => {
-    const { sceneRef, renderer, camera } = ctx.getDefaults()
-  })
+  update () {}
 
-  exp.subscribeToRender('main', ctx => {
-    const { sceneRef, renderer, camera } = ctx.getDefaults()
-    controls.update(clock.getDelta())
-  })
+  pointerMove () {}
 
-  // pointer move
-  exp.subscribeToPointerMove('main', (event, ctx) => {
-    const { sceneRef, renderer, camera } = ctx.getDefaults()
-  })
+  render () {
+    this.controls.update(this.clock.getDelta())
+  }
 
-  // resize window
-  exp.subscribeToInit('windowResize', ctx => {
-    try {
-      controls.handleResize()
-    } catch {}
-  })
+  windowResize () {
+    this.controls.handleResize()
+    this.camera.aspect = window.innerWidth / window.innerHeight
+    this.camera.updateProjectionMatrix()
+    this.renderer.setSize(window.innerWidth, window.innerHeight)
+  }
 }
-
-export default main

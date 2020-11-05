@@ -22,9 +22,21 @@ export class ExperienceState {
         }
       }
     }
-    this.renderers = { default: new THREE.WebGLRenderer({ antialias: true }) }
-    this.renderers.default.setSize(window.innerWidth, window.innerHeight)
     this.custom = {}
+
+    this.renderers = { default: new THREE.WebGLRenderer({ antialias: true }) }
+
+    // default setup
+
+    this.scenes.default.cameras.default.aspect =
+      window.innerWidth / window.innerHeight
+    this.scenes.default.cameras.default.updateProjectionMatrix()
+
+    this.renderers.default.setSize(window.innerWidth, window.innerHeight)
+    this.renderers.default.setPixelRatio(window.devicePixelRatio)
+    this.renderers.default.autoClear = false
+    this.renderers.default.shadowMap.enabled = true
+    this.renderers.default.shadowMap.type = THREE.BasicShadowMap
   }
 
   addCustomMembers (object) {
