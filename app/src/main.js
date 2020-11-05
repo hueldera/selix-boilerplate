@@ -1,8 +1,7 @@
 import * as THREE from 'three/build/three.module'
 import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls'
 import { generateHeight, generateTexture } from './demo/functions'
-// import setupStore from './store'
-
+import { gsap } from 'gsap'
 export default class Main {
   constructor (experience) {
     this.exp = experience

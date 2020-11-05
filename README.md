@@ -5,6 +5,9 @@
 ## How to run
 
 ```sh
+# install dependencies
+$ yarn
+
 # start development server
 $ yarn serve
 
